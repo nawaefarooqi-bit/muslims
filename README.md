@@ -1,10 +1,12 @@
-# نوائے فاروقی — Publish Ready
+# نوائے فاروقی — Master Structure Publish
 
-Static GitHub Pages website. Upload the contents of this folder to the repository root.
+یہ ورژن طے شدہ corrections کے ساتھ تیار کیا گیا ہے۔
 
-Main structure:
-1. تدبرِ قرآن
-2. فاروقی قرآنی کہانی
-3. قال الرسول ﷺ
-4. سیرتِ ہادی عالم ﷺ
-5. کاروانِ اسلام
+- ہوم پیج: نئی تعارفی عبارت اور "اپنی مطلوبہ سیریز منتخب کریں"
+- اردو: Noto Nastaliq Urdu (bundled)
+- عربی: Uthmanic font stack with bundled Amiri Quran fallback
+- قرآن: ترجمہ، مختصر تفسیر، آیت بہ آیت ربط، سورۃ ربط
+- آڈیو، ویڈیو، PDF کے placeholders
+- رابطہ، رائے و اصلاح، ہمارے بارے میں، پرائیویسی اور شرائط کے صفحات
+- سوشل میڈیا اور رابطہ معلومات footer میں
+- برانڈنگ: نوائے فاروقی
