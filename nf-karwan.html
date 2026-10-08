@@ -1,0 +1,517 @@
+<!-- ======================================================================
+     ماڈیول 6 — کاروانِ اسلام سیریز
+     تمہید · تعارف · حصہ اول تا دہم (اقساط) · اصولِ تحقیق اور ماخذ
+     استعمال (الف): مکمل تھیم (theme-full) میں یہ ماڈیول پہلے سے شامل ہے۔
+     استعمال (ب): ہلکی تھیم (theme-lite) کے ساتھ اس پوری فائل کو
+                  Layout > Add a Gadget > HTML/JavaScript میں پیسٹ کریں (عنوان خالی چھوڑیں)۔
+     ====================================================================== -->
+<!-- KARWAN-E-ISLAM PORTAL -->
+<div class='sub' id='p-karwan'>
+<div class='sub-h-tadabbur'>
+<span style='font-size:1.15rem;font-weight:bold;color:#F5E2B3;' id='kHeadTitle'>کاروانِ اسلام</span>
+<button class='home-back-btn' onclick='kBack()'>&#8617; واپس</button>
+</div>
+<div class='k-page on' id='k-menu' data-title='کاروانِ اسلام'>
+<div class='t-title'>کاروانِ اسلام — عہد بہ عہد تاریخِ امت کا سفر</div>
+<div class='t-grid'>
+<div class='card' onclick='kShow(&quot;k-why&quot;)'><div class='info'><span class='t'>تمہید: ہم یہ سیریز کیوں شروع کر رہے ہیں؟</span><span class='b'>پڑھنے کے لیے کلک کریں</span></div></div>
+<div class='card' onclick='kShow(&quot;k-intro&quot;)'><div class='info'><span class='t'>تاریخِ اسلام: تعارف، مفہوم، مقصد اور دائرۂ کار</span><span class='b'>پڑھنے کے لیے کلک کریں</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p1&quot;)'><div class='info'><span class='t'>حصہ اول: اسلام سے پہلے کا عالم</span><span class='b'>8 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p2&quot;)'><div class='info'><span class='t'>حصہ دوم: عہدِ رسالت ﷺ</span><span class='b'>21 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p3&quot;)'><div class='info'><span class='t'>حصہ سوم: خلافتِ راشدہ</span><span class='b'>11 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p4&quot;)'><div class='info'><span class='t'>حصہ چہارم: اموی دور</span><span class='b'>9 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p5&quot;)'><div class='info'><span class='t'>حصہ پنجم: عباسی دور اور علمی عروج</span><span class='b'>9 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p6&quot;)'><div class='info'><span class='t'>حصہ ششم: اندلس اور مغربِ اسلامی</span><span class='b'>8 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p7&quot;)'><div class='info'><span class='t'>حصہ ہفتم: صلیبی جنگیں اور ایوبی دور</span><span class='b'>7 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p8&quot;)'><div class='info'><span class='t'>حصہ ہشتم: منگولوں کے بعد اور عثمانی عروج</span><span class='b'>9 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p9&quot;)'><div class='info'><span class='t'>حصہ نہم: برصغیر میں اسلام</span><span class='b'>8 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-p10&quot;)'><div class='info'><span class='t'>حصہ دہم: استعمار سے عصرِ حاضر تک</span><span class='b'>10 اقساط</span></div></div>
+<div class='card' onclick='kShow(&quot;k-method&quot;)'><div class='info'><span class='t'>بنیادی اصولِ تحقیق اور ماخذ</span><span class='b'>پڑھنے کے لیے کلک کریں</span></div></div>
+</div>
+</div>
+<div class='k-page' id='k-why' data-title='ہم یہ سیریز کیوں شروع کر رہے ہیں؟'>
+<div class='t-title'>ہم یہ سیریز کیوں شروع کر رہے ہیں؟</div>
+<div class='chap-body open' style='margin:0 16px;'><h4 class='ch-h'>ہم یہ سیریز کیوں شروع کر رہے ہیں؟</h4>
+<p class='ch-p'>اسلام صرف ایک مذہبی عقیدہ نہیں بلکہ ایک ایسی جامع تہذیبی و تمدنی روایت ہے جس نے انسان، معاشرے، علم، اخلاق، سیاست، معیشت اور تہذیب کے مختلف میدانوں میں گہرا اثر چھوڑا ہے۔</p>
+<p class='ch-p'>اس سیریز کا مقصد امتِ مسلمہ کے ماضی کو مستند تاریخی ترتیب کے ساتھ سمجھنا ہے، تاکہ ہمیں معلوم ہو کہ اسلام کے ظہور کے بعد مسلمانوں نے کن مراحل سے سفر کیا، کہاں ترقی کی، کن مشکلات کا سامنا کیا اور کن اسباب سے عروج و زوال کے ادوار آئے۔</p>
+<h4 class='ch-h'>ایک مسلمان کے لیے تاریخِ اسلام کی اہمیت</h4>
+<p class='ch-p'>اپنی تاریخ سے واقفیت مسلمان کو اپنی تہذیبی اور علمی شناخت سے آگاہ کرتی ہے۔ تاریخ ہمیں سابقہ اقوام اور امت کے تجربات سے سبق لینے، عروج کے اسباب اختیار کرنے اور زوال کے اسباب سے بچنے کا شعور دیتی ہے۔</p>
+<p class='ch-p'>تاریخِ اسلام کا مطالعہ ہمیں صحابۂ کرامؓ، تابعین، علماء، محدثین، مفسرین، فقہاء، مجاہدین، حکمرانوں اور مسلم مفکرین کی خدمات سے بھی روشناس کراتا ہے۔</p>
+<h4 class='ch-h'>اس سیریز کا بنیادی مقصد</h4>
+<p class='ch-p'>اسلامی تاریخ کو جذباتی داستان یا محض واقعات کی فہرست کے بجائے مستند ماخذ کی روشنی میں زمانی ترتیب کے ساتھ پیش کرنا، تاکہ قاری اسلام اور مسلمانوں کی تاریخی، علمی، تہذیبی اور اجتماعی جدوجہد کو سمجھ سکے اور ماضی سے مستقبل کے لیے سبق حاصل کرے۔</p></div></div>
+<div class='k-page' id='k-intro' data-title='تاریخِ اسلام: تعارف، مفہوم، مقصد اور دائرۂ کار'>
+<div class='t-title'>تاریخِ اسلام: تعارف، مفہوم، مقصد اور دائرۂ کار</div>
+<div class='chap-body open' style='margin:0 16px;'><h4 class='ch-h'>1۔ تاریخ کیا ہے؟</h4>
+<p class='ch-p'>تاریخ سے مراد گزرے ہوئے زمانوں، واقعات، اقوام، شخصیات، معاشروں اور تہذیبوں کے حالات کا مستند مطالعہ ہے۔</p>
+<h4 class='ch-h'>2۔ تاریخ کے لغوی معنی</h4>
+<p class='ch-p'>لفظ ’’تاریخ‘‘ عربی زبان میں زمانہ، وقت اور کسی واقعے کے وقت کے تعین کے مفہوم میں استعمال ہوتا ہے۔</p>
+<h4 class='ch-h'>3۔ تاریخ کے اصطلاحی معنی</h4>
+<p class='ch-p'>اصطلاح میں تاریخ سے مراد ماضی کے اہم واقعات، حالات، شخصیات، اقوام، حکومتوں اور تہذیبوں کے عروج و زوال کا ترتیب وار اور مستند مطالعہ ہے۔</p>
+<h4 class='ch-h'>4۔ تاریخِ اسلام کیا ہے؟</h4>
+<p class='ch-p'>تاریخِ اسلام سے مراد اسلام کے ظہور، رسول اللہ ﷺ کی بعثت، اسلامی ریاست کے قیام، صحابۂ کرامؓ کے دور، خلافت، مسلم سلطنتوں، علمی و تہذیبی ترقی اور امتِ مسلمہ کے مختلف ادوار کی تاریخ کا مطالعہ ہے۔</p>
+<h4 class='ch-h'>5۔ تاریخِ اسلام کا مقصد</h4>
+<p class='ch-p'>تاریخِ اسلام کا مقصد صرف ماضی کے واقعات جاننا نہیں بلکہ امت کے عروج و زوال کے اسباب، اسلامی تہذیب و فکر کی تشکیل، مسلمانوں کی علمی و سیاسی خدمات اور ماضی کے تجربات سے مستقبل کے لیے رہنمائی حاصل کرنا ہے۔</p>
+<h4 class='ch-h'>6۔ تاریخِ اسلام کا دائرۂ کار</h4>
+<p class='ch-p'>اس کا دائرہ بہت وسیع ہے، جس میں:</p>
+<p class='ch-p'>• قبل از اسلام عرب کے حالات</p>
+<p class='ch-p'>• بعثتِ نبوی ﷺ</p>
+<p class='ch-p'>• عہدِ مکی</p>
+<p class='ch-p'>• عہدِ مدنی</p>
+<p class='ch-p'>• خلافتِ راشدہ</p>
+<p class='ch-p'>• بنو امیہ</p>
+<p class='ch-p'>• بنو عباس</p>
+<p class='ch-p'>• مسلم سلطنتیں</p>
+<p class='ch-p'>• اسلامی علوم و فنون</p>
+<p class='ch-p'>• مسلم علماء و مفکرین</p>
+<p class='ch-p'>• اسلامی تہذیب و تمدن</p>
+<p class='ch-p'>• اندلس</p>
+<p class='ch-p'>• برصغیر میں اسلام</p>
+<p class='ch-p'>• عثمانی دور</p>
+<p class='ch-p'>• مسلم دنیا کے جدید حالات اور دیگر اہم تاریخی ادوار شامل ہیں۔</p>
+<h4 class='ch-h'>7۔ تاریخ اور سیرت میں فرق</h4>
+<p class='ch-p'>سیرتِ نبوی ﷺ کا مرکزی موضوع رسول اللہ ﷺ کی حیاتِ مبارکہ ہے، جبکہ تاریخِ اسلام کا دائرہ آپ ﷺ کے بعد پوری امتِ مسلمہ کے مختلف ادوار، حکومتوں، معاشروں، علوم اور تہذیبوں تک پھیل جاتا ہے۔</p>
+<h4 class='ch-h'>8۔ اس سیریز کا بنیادی اصول</h4>
+<p class='ch-p'>اس سیریز میں اسلامی تاریخ کو زمانی ترتیب اور مستند تاریخی ماخذ کی روشنی میں پیش کیا جائے گا، تاکہ قاری کو اسلام کے ظہور سے عصرِ حاضر تک ایک مربوط تاریخی تصور حاصل ہو۔</p></div></div>
+<div class='k-page' id='k-p1' data-title='حصہ اول: اسلام سے پہلے کا عالم'>
+<div class='t-title'>حصہ اول: اسلام سے پہلے کا عالم</div>
+
+<!-- ── 1۔ اسلام سے پہلے دنیا کی سیاسی و مذہبی صورتِ حال ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ اسلام سے پہلے دنیا کی سیاسی و مذہبی صورتِ حال</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ عرب کا جغرافیہ، قبائل اور معاشرہ ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ عرب کا جغرافیہ، قبائل اور معاشرہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ مکہ اور بیت اللہ کی تاریخ ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ مکہ اور بیت اللہ کی تاریخ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ حضرت ابراہیمؑ اور حضرت اسماعیلؑ ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ حضرت ابراہیمؑ اور حضرت اسماعیلؑ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ عرب میں توحید سے شرک تک کا سفر ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ عرب میں توحید سے شرک تک کا سفر</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ قریش، عبدالمطلب اور مکہ کی قیادت ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ قریش، عبدالمطلب اور مکہ کی قیادت</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ عرب کے اخلاقی و معاشرتی حالات ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ عرب کے اخلاقی و معاشرتی حالات</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ ایران، روم اور حبشہ کی عالمی طاقتیں ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ ایران، روم اور حبشہ کی عالمی طاقتیں</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p2' data-title='حصہ دوم: عہدِ رسالت ﷺ'>
+<div class='t-title'>حصہ دوم: عہدِ رسالت ﷺ</div>
+
+<!-- ── 1۔ ولادتِ رسول اللہ ﷺ اور نسبِ مبارک ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ ولادتِ رسول اللہ ﷺ اور نسبِ مبارک</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ بچپن، جوانی اور بعثت سے پہلے کی زندگی ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ بچپن، جوانی اور بعثت سے پہلے کی زندگی</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ نکاحِ خدیجہؓ اور تعمیرِ کردار ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ نکاحِ خدیجہؓ اور تعمیرِ کردار</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ غارِ حرا اور آغازِ وحی ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ غارِ حرا اور آغازِ وحی</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ ابتدائی دعوت اور اولین مسلمان ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ ابتدائی دعوت اور اولین مسلمان</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ علانیہ دعوت اور قریش کی مخالفت ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ علانیہ دعوت اور قریش کی مخالفت</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ حبشہ کی ہجرت ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ حبشہ کی ہجرت</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ شعبِ ابی طالب اور عامُ الحزن ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ شعبِ ابی طالب اور عامُ الحزن</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 9۔ طائف، معراج اور دعوت کا نیا مرحلہ ── -->
+<div class='chap' data-key='c9'><div class='chap-h' onclick='toggleChap(this)'><span>9۔ طائف، معراج اور دعوت کا نیا مرحلہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 10۔ بیعتِ عقبہ اور ہجرتِ مدینہ ── -->
+<div class='chap' data-key='c10'><div class='chap-h' onclick='toggleChap(this)'><span>10۔ بیعتِ عقبہ اور ہجرتِ مدینہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 11۔ مدینہ میں اسلامی معاشرے کی بنیاد ── -->
+<div class='chap' data-key='c11'><div class='chap-h' onclick='toggleChap(this)'><span>11۔ مدینہ میں اسلامی معاشرے کی بنیاد</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 12۔ میثاقِ مدینہ اور ریاستِ مدینہ ── -->
+<div class='chap' data-key='c12'><div class='chap-h' onclick='toggleChap(this)'><span>12۔ میثاقِ مدینہ اور ریاستِ مدینہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 13۔ غزوۂ بدر ── -->
+<div class='chap' data-key='c13'><div class='chap-h' onclick='toggleChap(this)'><span>13۔ غزوۂ بدر</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 14۔ غزوۂ احد ── -->
+<div class='chap' data-key='c14'><div class='chap-h' onclick='toggleChap(this)'><span>14۔ غزوۂ احد</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 15۔ غزوۂ خندق اور دفاعِ مدینہ ── -->
+<div class='chap' data-key='c15'><div class='chap-h' onclick='toggleChap(this)'><span>15۔ غزوۂ خندق اور دفاعِ مدینہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 16۔ صلحِ حدیبیہ ── -->
+<div class='chap' data-key='c16'><div class='chap-h' onclick='toggleChap(this)'><span>16۔ صلحِ حدیبیہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 17۔ خیبر، دعوتِ اسلام اور عالمی خطوط ── -->
+<div class='chap' data-key='c17'><div class='chap-h' onclick='toggleChap(this)'><span>17۔ خیبر، دعوتِ اسلام اور عالمی خطوط</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 18۔ فتحِ مکہ ── -->
+<div class='chap' data-key='c18'><div class='chap-h' onclick='toggleChap(this)'><span>18۔ فتحِ مکہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 19۔ حنین، تبوک اور جزیرۂ عرب میں اسلام ── -->
+<div class='chap' data-key='c19'><div class='chap-h' onclick='toggleChap(this)'><span>19۔ حنین، تبوک اور جزیرۂ عرب میں اسلام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 20۔ حجۃ الوداع ── -->
+<div class='chap' data-key='c20'><div class='chap-h' onclick='toggleChap(this)'><span>20۔ حجۃ الوداع</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 21۔ وصالِ رسول اللہ ﷺ اور امت کا پہلا امتحان ── -->
+<div class='chap' data-key='c21'><div class='chap-h' onclick='toggleChap(this)'><span>21۔ وصالِ رسول اللہ ﷺ اور امت کا پہلا امتحان</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p3' data-title='حصہ سوم: خلافتِ راشدہ'>
+<div class='t-title'>حصہ سوم: خلافتِ راشدہ</div>
+
+<!-- ── 1۔ حضرت ابوبکر صدیقؓ اور خلافت کا استحکام ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ حضرت ابوبکر صدیقؓ اور خلافت کا استحکام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ فتنۂ ارتداد اور مانعینِ زکوٰۃ ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ فتنۂ ارتداد اور مانعینِ زکوٰۃ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ جمعِ قرآن اور فتوحات کا آغاز ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ جمعِ قرآن اور فتوحات کا آغاز</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ حضرت عمر فاروقؓ اور اسلامی ریاست کی توسیع ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ حضرت عمر فاروقؓ اور اسلامی ریاست کی توسیع</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ شام، عراق اور فارس کی فتوحات ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ شام، عراق اور فارس کی فتوحات</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ بیت المقدس کی فتح اور نظامِ عدل ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ بیت المقدس کی فتح اور نظامِ عدل</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ حضرت عثمانؓ اور اسلامی سلطنت کی وسعت ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ حضرت عثمانؓ اور اسلامی سلطنت کی وسعت</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ جمعِ قرآن اور مصاحفِ عثمانی ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ جمعِ قرآن اور مصاحفِ عثمانی</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 9۔ فتنۂ کبریٰ اور شہادتِ عثمانؓ ── -->
+<div class='chap' data-key='c9'><div class='chap-h' onclick='toggleChap(this)'><span>9۔ فتنۂ کبریٰ اور شہادتِ عثمانؓ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 10۔ حضرت علیؓ، جنگِ جمل اور جنگِ صفین ── -->
+<div class='chap' data-key='c10'><div class='chap-h' onclick='toggleChap(this)'><span>10۔ حضرت علیؓ، جنگِ جمل اور جنگِ صفین</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 11۔ خوارج، شہادتِ علیؓ اور حضرت حسنؓ کا تاریخی فیصلہ ── -->
+<div class='chap' data-key='c11'><div class='chap-h' onclick='toggleChap(this)'><span>11۔ خوارج، شہادتِ علیؓ اور حضرت حسنؓ کا تاریخی فیصلہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p4' data-title='حصہ چہارم: اموی دور'>
+<div class='t-title'>حصہ چہارم: اموی دور</div>
+
+<!-- ── 1۔ خلافتِ امویہ کا قیام ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ خلافتِ امویہ کا قیام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ حضرت معاویہؓ کا دور اور اسلامی ریاست ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ حضرت معاویہؓ کا دور اور اسلامی ریاست</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ واقعۂ کربلا اور اس کے تاریخی اثرات ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ واقعۂ کربلا اور اس کے تاریخی اثرات</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ عبدالملک بن مروان اور اموی استحکام ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ عبدالملک بن مروان اور اموی استحکام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ اموی فتوحات: مشرق سے مغرب تک ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ اموی فتوحات: مشرق سے مغرب تک</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ اندلس کی فتح ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ اندلس کی فتح</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ سندھ کی فتح اور محمد بن قاسم ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ سندھ کی فتح اور محمد بن قاسم</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ عمر بن عبدالعزیزؒ: عدل و اصلاح کا نمونہ ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ عمر بن عبدالعزیزؒ: عدل و اصلاح کا نمونہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 9۔ اموی سلطنت کا زوال ── -->
+<div class='chap' data-key='c9'><div class='chap-h' onclick='toggleChap(this)'><span>9۔ اموی سلطنت کا زوال</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p5' data-title='حصہ پنجم: عباسی دور اور علمی عروج'>
+<div class='t-title'>حصہ پنجم: عباسی دور اور علمی عروج</div>
+
+<!-- ── 1۔ عباسی انقلاب اور بغداد کا قیام ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ عباسی انقلاب اور بغداد کا قیام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ منصور عباسی اور عباسی ریاست ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ منصور عباسی اور عباسی ریاست</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ ہارون الرشید اور عباسی عروج ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ ہارون الرشید اور عباسی عروج</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ مامون الرشید اور علمی تحریک ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ مامون الرشید اور علمی تحریک</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ بغداد: علم، تہذیب اور تمدن کا مرکز ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ بغداد: علم، تہذیب اور تمدن کا مرکز</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ ائمۂ فقہ اور اسلامی علمی روایت ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ ائمۂ فقہ اور اسلامی علمی روایت</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ فرقہ وارانہ و فکری تحریکیں ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ فرقہ وارانہ و فکری تحریکیں</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ عباسی کمزوری اور مسلم دنیا کی تقسیم ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ عباسی کمزوری اور مسلم دنیا کی تقسیم</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 9۔ منگول حملہ اور سقوطِ بغداد ── -->
+<div class='chap' data-key='c9'><div class='chap-h' onclick='toggleChap(this)'><span>9۔ منگول حملہ اور سقوطِ بغداد</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p6' data-title='حصہ ششم: اندلس اور مغربِ اسلامی'>
+<div class='t-title'>حصہ ششم: اندلس اور مغربِ اسلامی</div>
+
+<!-- ── 1۔ اندلس میں مسلمانوں کا آغاز ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ اندلس میں مسلمانوں کا آغاز</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ طارق بن زیاد اور فتحِ اندلس ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ طارق بن زیاد اور فتحِ اندلس</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ عبدالرحمن الداخل اور اموی اندلس ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ عبدالرحمن الداخل اور اموی اندلس</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ قرطبہ: علم و تہذیب کا سنہری دور ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ قرطبہ: علم و تہذیب کا سنہری دور</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ اندلس کے علمی و تہذیبی کارنامے ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ اندلس کے علمی و تہذیبی کارنامے</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ ملوک الطوائف اور سیاسی انتشار ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ ملوک الطوائف اور سیاسی انتشار</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ مرابطین و موحدین ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ مرابطین و موحدین</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ سقوطِ غرناطہ اور اندلس کا خاتمہ ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ سقوطِ غرناطہ اور اندلس کا خاتمہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p7' data-title='حصہ ہفتم: صلیبی جنگیں اور ایوبی دور'>
+<div class='t-title'>حصہ ہفتم: صلیبی جنگیں اور ایوبی دور</div>
+
+<!-- ── 1۔ صلیبی جنگوں کا پس منظر ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ صلیبی جنگوں کا پس منظر</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ بیت المقدس پر صلیبی قبضہ ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ بیت المقدس پر صلیبی قبضہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ عماد الدین زنگی اور مسلم مزاحمت ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ عماد الدین زنگی اور مسلم مزاحمت</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ نور الدین زنگی اور اسلامی اتحاد ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ نور الدین زنگی اور اسلامی اتحاد</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ سلطان صلاح الدین ایوبیؒ ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ سلطان صلاح الدین ایوبیؒ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ حطین اور بیت المقدس کی فتح ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ حطین اور بیت المقدس کی فتح</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ ایوبی دور اور صلیبی طاقتوں کا اختتام ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ ایوبی دور اور صلیبی طاقتوں کا اختتام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p8' data-title='حصہ ہشتم: منگولوں کے بعد اور عثمانی عروج'>
+<div class='t-title'>حصہ ہشتم: منگولوں کے بعد اور عثمانی عروج</div>
+
+<!-- ── 1۔ مملوک سلطنت اور عالمِ اسلام کا دفاع ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ مملوک سلطنت اور عالمِ اسلام کا دفاع</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ منگولوں کے بعد مسلم دنیا کی نئی تشکیل ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ منگولوں کے بعد مسلم دنیا کی نئی تشکیل</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ عثمانی سلطنت کا آغاز ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ عثمانی سلطنت کا آغاز</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ عثمان غازی اور عثمانی توسیع ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ عثمان غازی اور عثمانی توسیع</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ محمد فاتح اور قسطنطنیہ کی فتح ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ محمد فاتح اور قسطنطنیہ کی فتح</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ سلیم اول اور عالمِ اسلام میں عثمانی قیادت ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ سلیم اول اور عالمِ اسلام میں عثمانی قیادت</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ سلیمان قانونی اور عثمانی عروج ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ سلیمان قانونی اور عثمانی عروج</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ عثمانی سلطنت: نظام، فتوحات اور تہذیب ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ عثمانی سلطنت: نظام، فتوحات اور تہذیب</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 9۔ عثمانی زوال اور خلافت کا خاتمہ ── -->
+<div class='chap' data-key='c9'><div class='chap-h' onclick='toggleChap(this)'><span>9۔ عثمانی زوال اور خلافت کا خاتمہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p9' data-title='حصہ نہم: برصغیر میں اسلام'>
+<div class='t-title'>حصہ نہم: برصغیر میں اسلام</div>
+
+<!-- ── 1۔ سندھ میں اسلام اور محمد بن قاسم ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ سندھ میں اسلام اور محمد بن قاسم</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ غزنوی اور غوری ادوار ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ غزنوی اور غوری ادوار</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ دہلی سلطنت کا قیام ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ دہلی سلطنت کا قیام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ سلاطینِ دہلی: غلام، خلجی، تغلق اور لودھی ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ سلاطینِ دہلی: غلام، خلجی، تغلق اور لودھی</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ مغلیہ سلطنت کا قیام ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ مغلیہ سلطنت کا قیام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ اکبر، جہانگیر اور شاہجہان کا دور ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ اکبر، جہانگیر اور شاہجہان کا دور</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ اورنگزیب عالمگیرؒ اور مغلیہ عروج ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ اورنگزیب عالمگیرؒ اور مغلیہ عروج</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ مغلیہ زوال اور برصغیر کی سیاسی تبدیلی ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ مغلیہ زوال اور برصغیر کی سیاسی تبدیلی</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-p10' data-title='حصہ دہم: استعمار سے عصرِ حاضر تک'>
+<div class='t-title'>حصہ دہم: استعمار سے عصرِ حاضر تک</div>
+
+<!-- ── 1۔ یورپی طاقتوں کا عالمِ اسلام میں داخلہ ── -->
+<div class='chap' data-key='c1'><div class='chap-h' onclick='toggleChap(this)'><span>1۔ یورپی طاقتوں کا عالمِ اسلام میں داخلہ</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 2۔ برصغیر میں برطانوی اقتدار ── -->
+<div class='chap' data-key='c2'><div class='chap-h' onclick='toggleChap(this)'><span>2۔ برصغیر میں برطانوی اقتدار</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 3۔ 1857ء اور مسلمانوں کا نیا دور ── -->
+<div class='chap' data-key='c3'><div class='chap-h' onclick='toggleChap(this)'><span>3۔ 1857ء اور مسلمانوں کا نیا دور</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 4۔ شاہ ولی اللہؒ اور اصلاحی فکر ── -->
+<div class='chap' data-key='c4'><div class='chap-h' onclick='toggleChap(this)'><span>4۔ شاہ ولی اللہؒ اور اصلاحی فکر</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 5۔ سید احمد شہیدؒ اور تحریکِ اصلاح ── -->
+<div class='chap' data-key='c5'><div class='chap-h' onclick='toggleChap(this)'><span>5۔ سید احمد شہیدؒ اور تحریکِ اصلاح</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 6۔ دارالعلوم دیوبند اور علمی احیاء ── -->
+<div class='chap' data-key='c6'><div class='chap-h' onclick='toggleChap(this)'><span>6۔ دارالعلوم دیوبند اور علمی احیاء</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 7۔ خلافت تحریک اور برصغیر کی سیاسی بیداری ── -->
+<div class='chap' data-key='c7'><div class='chap-h' onclick='toggleChap(this)'><span>7۔ خلافت تحریک اور برصغیر کی سیاسی بیداری</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 8۔ تحریکِ آزادی اور قیامِ پاکستان ── -->
+<div class='chap' data-key='c8'><div class='chap-h' onclick='toggleChap(this)'><span>8۔ تحریکِ آزادی اور قیامِ پاکستان</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 9۔ خلافتِ عثمانیہ کے بعد عالمِ اسلام ── -->
+<div class='chap' data-key='c9'><div class='chap-h' onclick='toggleChap(this)'><span>9۔ خلافتِ عثمانیہ کے بعد عالمِ اسلام</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+
+<!-- ── 10۔ آج کا عالمِ اسلام — تاریخ سے مستقبل کا سبق ── -->
+<div class='chap' data-key='c10'><div class='chap-h' onclick='toggleChap(this)'><span>10۔ آج کا عالمِ اسلام — تاریخ سے مستقبل کا سبق</span><span>&#9662;</span></div>
+<div class='chap-body'>یہاں اس قسط کا متن لکھیں۔</div></div>
+</div>
+<div class='k-page' id='k-method' data-title='بنیادی اصولِ تحقیق اور ماخذ'>
+<div class='t-title'>بنیادی اصولِ تحقیق اور ماخذ</div>
+<div class='chap-body open' style='margin:0 16px;'><h4 class='ch-h'>بنیادی اصولِ تحقیق</h4>
+<p class='ch-p'>ہر قسط کی تیاری میں ترجیح یہ ہوگی:</p>
+<p class='ch-p'>قرآن کریم ← صحیح احادیث ← معتبر کتبِ سیرت ← قدیم مستند کتبِ تاریخ ← معتبر جدید تاریخی تحقیقات</p>
+<p class='ch-p'>اختلافی واقعات میں:</p>
+<p class='ch-p'>• مختلف روایات کا تقابل کیا جائے گا۔</p>
+<p class='ch-p'>• ضعیف اور غیر مستند روایات کی نشاندہی کی جائے گی۔</p>
+<p class='ch-p'>• جہاں قطعی فیصلہ ممکن نہ ہو وہاں اسے قطعی حقیقت کے طور پر بیان نہیں کیا جائے گا۔</p>
+<p class='ch-p'>• ہر قسط کے آخر میں اہم ماخذ درج کیے جائیں گے۔</p>
+<h4 class='ch-h'>بنیادی تاریخی ماخذ</h4>
+<p class='ch-p'>تاریخ الطبری، البدایہ والنہایہ، الکامل فی التاریخ، تاریخ ابن خلدون، تاریخ الخلفاء، سیرت ابن ہشام، زاد المعاد اور دیگر معتبر مصادر۔</p></div></div>
+</div>
