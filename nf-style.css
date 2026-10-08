@@ -194,6 +194,13 @@ button.shr{padding:0;font-family:inherit;line-height:1;}
 .nf-player-btns{display:flex;gap:8px;flex-wrap:wrap;}
 .player-btn{font-family:inherit;}
 .player-btn-sm{padding:3px 12px;font-size:.75rem;}
+.ayah-card-header{gap:6px;flex-wrap:wrap;}
+.ayah-card-header .ayah-no{margin-left:auto;}
+.bism-card{background:#FBF3DC;text-align:center;}
+.bism-card .ayah-arabic{text-align:center;}
+.bism-card .ayah-urdu{text-align:center;}
+.player-btn.ayah-from{background:#FFFFFF;color:var(--deep-emerald);border-color:var(--border-gold);}
+.player-btn.ayah-from:hover{background:var(--deep-emerald);color:#F5E2B3;}
 .surah-box{background:#FFFEFA;border:2px solid var(--border-gold);border-top:5px solid var(--deep-emerald);border-radius:8px;padding:18px;}
 .surah-head{background:linear-gradient(135deg,var(--deep-emerald),var(--mid-emerald));color:#F5E2B3;padding:12px;border-radius:6px;margin-bottom:14px;text-align:center;}
 .surah-head h2{margin:0;font-size:1.6rem;}
@@ -226,6 +233,10 @@ button.shr{padding:0;font-family:inherit;line-height:1;}
 .nf-modal-box{background:#FCFBF7;border:2px solid var(--border-gold);border-radius:12px;padding:12px;max-width:440px;width:100%;display:flex;flex-direction:column;gap:10px;}
 .nf-modal-box img{width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:8px;background:#04231A;display:block;}
 .nf-modal-actions{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+.nf-modal-msg{margin:0;padding:8px 12px;border-radius:8px;background:#EBF4EE;border:1px solid var(--border-gold);color:var(--deep-emerald);font-size:.85rem;line-height:2.1;text-align:center;}
+.nf-modal-share{justify-content:center;padding-top:8px;border-top:1px dashed #E2D5B0;}
+.nf-modal-share .shr{width:38px;height:38px;font-size:1rem;}
+.toast{z-index:10050;}
 .player-btn.nf-close{background:#FFFFFF;color:var(--deep-emerald);border-color:var(--border-gold);}
 
 /* ---------- ب5. ویڈیو گیلری ---------- */

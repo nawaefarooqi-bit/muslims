@@ -18,6 +18,7 @@
    ===================================================================== */
 var NF_CFG = {
   site: "نوائے فاروقی",
+  slogan: "علم، حقیقت اور آگاہی، قرآن و سنت کی روشنی میں",
   channel: "https://www.youtube.com/@nawaefarooqi",
 
   /* ہر سیریز کے ہیش ٹیگ (کیپشن میں خود بخود لگتے ہیں) */
@@ -835,7 +836,9 @@ function ensureSurahLoaded() {
   else { setHash("tadabbur", "t-recite", v); }
 }
 function focusAyah(n) {
-  var card = byId("ayah-card-" + (n - 1));
+  var idx = -1;
+  for (var i = 0; i < versesData.length; i++) { if (!versesData[i].bism && versesData[i].numberInSurah === n) { idx = i; break; } }
+  var card = byId("ayah-card-" + idx);
   if (!card) { return; }
   setTimeout(function() {
     card.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -843,6 +846,26 @@ function focusAyah(n) {
     setTimeout(function() { card.classList.remove("ayah-flash"); }, 2600);
   }, 250);
 }
+
+/* بسم اللہ کا متن اور منتخب ترجمہ (سورۃ الفاتحہ 1:1 سے) — ہر ترجمے کے لیے ایک بار */
+var bismCache = {};
+function getJson(u) {
+  return fetch(u).then(function(res) {
+    if (!res.ok) { throw new Error("Quran API network error"); }
+    return res.json();
+  });
+}
+function getBism(trans) {
+  if (!bismCache[trans.id]) {
+    bismCache[trans.id] = getJson("https://api.alquran.cloud/v1/surah/1/editions/quran-uthmani," + trans.id + "?offset=0&limit=1").then(function(j) {
+      var a = j.data[0].ayahs[0], u = j.data[1].ayahs[0];
+      return { ar: a.text, ur: u ? u.text : "" };
+    });
+    bismCache[trans.id].catch(function() { delete bismCache[trans.id]; });
+  }
+  return bismCache[trans.id];
+}
+function vLabel(v) { return v && v.bism ? "بسم اللہ" : "آیت نمبر " + (v ? v.numberInSurah : ""); }
 
 /* LOAD SURAH */
 function loadSurah(surahNum, autoPlay, focus) {
@@ -869,23 +892,26 @@ function loadSurah(surahNum, autoPlay, focus) {
     "<div id='versesContainer' style='display:none;'></div>" +
   "</div>";
   var url = "https://api.alquran.cloud/v1/surah/" + surahNum + "/editions/quran-uthmani," + trans.id;
-  fetch(url)
-  .then(function(res) {
-    if (!res.ok) { throw new Error("Quran API network error"); }
-    return res.json();
-  })
-  .then(function(json) {
+  var needBism = surahNum !== 1 && surahNum !== 9;
+  Promise.all([getJson(url), needBism ? getBism(trans).catch(function() { return null; }) : null])
+  .then(function(pair) {
+    var json = pair[0], bism = pair[1];
     if (tok !== surahReqTok) { return; }
     if (json.code !== 200 || !json.data || json.data.length < 2) { throw new Error("Quran data not found"); }
     var arAyahs = json.data[0].ayahs;
     var urAyahs = json.data[1].ayahs;
+    /* سورت کے شروع میں بسم اللہ (سورۃ الفاتحہ میں یہ پہلی آیت ہے، سورۃ التوبہ میں نہیں) */
+    var items = [];
+    if (bism) { items.push({ bism: true, ar: { text: bism.ar, number: 1, numberInSurah: 0 }, ur: { text: bism.ur } }); }
+    arAyahs.forEach(function(a, k) { items.push({ ar: a, ur: urAyahs[k] || { text: "" } }); });
     versesData = [];
     var container = byId("versesContainer");
     var html = "";
-    for (var i = 0; i < arAyahs.length; i++) {
-      var arObj = arAyahs[i];
-      var urObj = urAyahs[i] || { text: "" };
-      var words = ayahWords(arObj.text, surahNum, arObj.numberInSurah);
+    for (var i = 0; i < items.length; i++) {
+      var isB = !!items[i].bism;
+      var arObj = items[i].ar;
+      var urObj = items[i].ur;
+      var words = isB ? String(arObj.text).split(/\s+/).filter(function(x) { return x; }) : ayahWords(arObj.text, surahNum, arObj.numberInSurah);
       var key = surahNum + ":" + arObj.numberInSurah;
       var wordsHtml = "";
       var urHtml = urObj.text.split(/\s+/).filter(function(x) { return x; }).map(function(x, k) {
@@ -894,8 +920,9 @@ function loadSurah(surahNum, autoPlay, focus) {
       for (var w = 0; w < words.length; w++) {
         wordsHtml += "<span class='q-word' id='w-" + i + "-" + w + "'>" + esc(words[w]) + "</span> ";
       }
-      wordsHtml += "<span class='ayah-end'> ﴿" + arObj.numberInSurah + "﴾ </span>";
+      if (!isB) { wordsHtml += "<span class='ayah-end'> ﴿" + arObj.numberInSurah + "﴾ </span>"; }
       versesData.push({
+        bism: isB,
         index: i,
         globalNumber: arObj.number,
         numberInSurah: arObj.numberInSurah,
@@ -903,12 +930,28 @@ function loadSurah(surahNum, autoPlay, focus) {
         wordsCount: words.length,
         urduText: urObj.text
       });
+      if (isB) {
+        html +=
+        "<div class='ayah-card bism-card' id='ayah-card-" + i + "'>" +
+          "<div class='ayah-card-header'>" +
+            "<span class='ayah-no'>بسم اللہ الرحمٰن الرحیم</span>" +
+            "<button type='button' class='player-btn player-btn-sm ayah-play' data-i='" + i + "' onclick='toggleVerse(" + i + ")'>▶ سنیں</button>" +
+            "<button type='button' class='player-btn player-btn-sm ayah-from' onclick='playFrom(" + i + ")' title='بسم اللہ سے سورت کے آخر تک مسلسل'>⏩ یہاں سے مسلسل</button>" +
+          "</div>" +
+          "<div class='ayah-arabic' lang='ar'>" + wordsHtml + "</div>" +
+          "<div class='ayah-urdu' id='urdu-block-" + i + "'>" +
+            "<strong class='ayah-urdu-lbl'>اردو ترجمہ: </strong>" + urHtml +
+          "</div>" +
+        "</div>";
+        continue;
+      }
       NF_AYAH[key] = { s: surahNum, a: arObj.numberInSurah, ar: words.join(" "), ur: urObj.text, tr: trans.name };
       html +=
       "<div class='ayah-card' id='ayah-card-" + i + "' data-akey='" + key + "'>" +
         "<div class='ayah-card-header'>" +
           "<span class='ayah-no'>آیت نمبر: " + arObj.numberInSurah + "</span>" +
           "<button type='button' class='player-btn player-btn-sm ayah-play' data-i='" + i + "' onclick='toggleVerse(" + i + ")'>▶ سنیں</button>" +
+          "<button type='button' class='player-btn player-btn-sm ayah-from' onclick='playFrom(" + i + ")' title='اس آیت سے سورت کے آخر تک مسلسل'>⏩ یہاں سے مسلسل</button>" +
         "</div>" +
         "<div class='ayah-arabic' lang='ar'>" + wordsHtml + "</div>" +
         "<div class='ayah-urdu' id='urdu-block-" + i + "'>" +
@@ -921,7 +964,7 @@ function loadSurah(surahNum, autoPlay, focus) {
     byId("loadingMsg").style.display = "none";
     container.style.display = "block";
     byId("audioControlBar").style.display = "flex";
-    byId("playerStatus").innerText = "تلاوت: تیار ہے — کل آیات: " + versesData.length;
+    byId("playerStatus").innerText = "تلاوت: تیار ہے — کل آیات: " + arAyahs.length;
     if (pendingAyah) { focusAyah(pendingAyah); pendingAyah = 0; }
     var wantAuto = pendingAutoPlay;
     loadSegments(surahNum, wantAuto ? function() {
@@ -947,6 +990,7 @@ function loadSurah(surahNum, autoPlay, focus) {
 
 /* ---------- اردو آڈیو (جالندھری ترجمہ): islamic.network → everyayah ---------- */
 function getUrduAudioUrls(vData) {
+  if (vData.bism) { vData = { globalNumber: 1, surahNum: 1, numberInSurah: 1 }; }
   return [
     "https://cdn.islamic.network/quran/audio/64/ur.khan/" + vData.globalNumber + ".mp3",
     "https://everyayah.com/data/Urdu_Shamshad_Ali_Khan_46kbps/" + pad3(vData.surahNum) + pad3(vData.numberInSurah) + ".mp3"
@@ -1082,7 +1126,7 @@ function startArabicSync(vIdx) {
     }
   }
   var cache = null;
-  var sd = arSegData[d.numberInSurah];
+  var sd = d.bism ? null : arSegData[d.numberInSurah];
   startKaraoke(arAudio, els, "active-word", function() {
     if (cache) { return cache; }
     /* اصل ٹائمنگ (quran.com) */
@@ -1165,6 +1209,7 @@ function loadSegments(surahNum, firstDone) {
 function arabicCandidates(vIdx) {
   var vd = versesData[vIdx];
   var c = [];
+  if (vd.bism) { return ayahAudioUrls(curReciter, 1, 1, 1).map(function(u) { return { url: u, real: false }; }); }
   var sd = arSegData[vd.numberInSurah];
   if (sd && sd.segs && sd.segs.length) {
     sd.urls.forEach(function(u) { c.push({ url: u, real: true }); });
@@ -1173,9 +1218,24 @@ function arabicCandidates(vIdx) {
   return c;
 }
 
+/* ---------- ہر کوشش کا اپنا نمبر ----------
+   ایک ہی ناکامی پر "error" اور "play() rejection" دونوں آتے ہیں؛ نمبر کی مدد سے
+   اسے صرف ایک بار سنبھالا جاتا ہے، اور پرانی کوشش کا کوئی اشارہ نئی آیت کو نہیں چھیڑتا۔ */
+var playTok = 0;
+var startTimer = null;
+var START_TIMEOUT_MS = 8000;   /* اتنی دیر میں آواز شروع نہ ہو تو اگلا ذریعہ */
+function armStart(tok, onFail) {
+  clearTimeout(startTimer);
+  startTimer = setTimeout(function() {
+    if (tok === playTok && currentVerseIndex >= 0 && !audioWasPaused && arAudio.currentTime < 0.05) { onFail(); }
+  }, START_TIMEOUT_MS);
+}
+function setOwner(vIdx, urdu) { arAudio._owner = { idx: vIdx, urdu: urdu }; }
+
 /* PLAY SINGLE VERSE */
 function playVerse(vIdx) {
   if (vIdx < 0 || vIdx >= versesData.length) { return; }
+  var tok = ++playTok;
   stopMini();
   clearHighlights();
   currentVerseIndex = vIdx;
@@ -1203,7 +1263,27 @@ function playVerse(vIdx) {
   function setArabicSource() {
     arCurrentIsReal = arCands[arTry].real;
     arAudio.src = arCands[arTry].url;
+    setOwner(vIdx, false);
     arAudio.load();
+    var at = arTry;
+    armStart(tok, function() { arFail(at); });
+  }
+  var arFailedTry = -1;
+  function arFail(at) {
+    if (tok !== playTok || at !== arTry || arFailedTry === at) { return; }
+    arFailedTry = at;
+    if (arTry + 1 < arCands.length) {
+      arTry++;
+      setArabicSource();
+      arAudio.play().catch(function() {});
+      return;
+    }
+    clearTimeout(startTimer);
+    console.warn("Arabic audio failed");
+    byId("playerStatus").innerText = "اس قاری کی آڈیو دستیاب نہیں ہو سکی — " + vLabel(vData);
+    if (mode === "both") { playUrduAudio(vIdx, 0); }
+    else if (isAutoPlaying) { setTimeout(function() { if (tok === playTok) { goToNextVerse(); } }, 800); }
+    else { stopAudio(); byId("playerStatus").innerText = "اس قاری کی آڈیو دستیاب نہیں ہو سکی — " + vLabel(vData); }
   }
   if (!arCands.length) { goToNextVerse(); return; }
   setArabicSource();
@@ -1222,41 +1302,39 @@ function playVerse(vIdx) {
     var nx = arabicCandidates(vIdx + 1);
     if (nx.length) { nextArPre.src = nx[0].url; }
   }
-  byId("playerStatus").innerText = curReciter.name + " — آیت نمبر " + vData.numberInSurah;
+  byId("playerStatus").innerText = curReciter.name + " — " + vLabel(vData);
   /* لفظ بہ لفظ highlight: آواز شروع ہوتے ہی (playing) اور currentTime کے مطابق */
   arAudio.onloadedmetadata = null;
-  arAudio.onplaying = function() { startArabicSync(vIdx); };
+  arAudio.onplaying = function() { if (tok === playTok) { clearTimeout(startTimer); startArabicSync(vIdx); } };
   /* عربی ختم */
   arAudio.onended = function() {
+    if (tok !== playTok) { return; }
     clearInterval(wordInterval);
     stopSync();
     markArabicRead(vIdx);
     if (mode === "both") { playUrduAudio(vIdx, 0); } else { goToNextVerse(); }
   };
   /* عربی آڈیو error: اگلا ذریعہ آزمائیں */
-  arAudio.onerror = function() {
-    if (arTry + 1 < arCands.length) {
-      arTry++;
-      setArabicSource();
-      arAudio.play().catch(function() {});
-      return;
-    }
-    console.warn("Arabic audio failed");
-    byId("playerStatus").innerText = "اس قاری کی آڈیو دستیاب نہیں ہو سکی — آیت " + vData.numberInSurah;
-    if (mode === "both") { playUrduAudio(vIdx, 0); }
-    else if (isAutoPlaying) { setTimeout(function() { if (currentVerseIndex === vIdx) { goToNextVerse(); } }, 800); }
-    else { stopAudio(); byId("playerStatus").innerText = "اس قاری کی آڈیو دستیاب نہیں ہو سکی — آیت " + vData.numberInSurah; }
-  };
+  arAudio.onerror = function() { arFail(arTry); };
   arAudio.play().catch(function(error) {
     if (error && error.name === "AbortError") { return; }
     if (error && error.name === "NotAllowedError") { needTap(); return; }
     console.warn("Arabic playback error:", error);
+    arFail(0);
   });
 }
 
 /* PLAY URDU AUDIO (کئی ذرائع آزما کر) */
 function playUrduAudio(vIdx, srcIdx) {
   srcIdx = srcIdx || 0;
+  var tok = ++playTok;
+  var failed = false;
+  function urFail() {
+    if (failed || tok !== playTok) { return; }
+    failed = true;
+    clearTimeout(startTimer);
+    playUrduAudio(vIdx, srcIdx + 1);
+  }
   isPlayingUrdu = true;
   var vData = versesData[vIdx];
   var card = byId("ayah-card-" + vIdx);
@@ -1265,11 +1343,12 @@ function playUrduAudio(vIdx, srcIdx) {
     card.classList.add("urdu-playing");
     card.scrollIntoView({ behavior: "smooth", block: "center" });
   }
-  byId("playerStatus").innerText = "اردو ترجمہ — آیت نمبر " + vData.numberInSurah;
+  byId("playerStatus").innerText = "اردو ترجمہ — " + vLabel(vData);
   var urls = getUrduAudioUrls(vData);
   /* تمام ذرائع ناکام ہو گئے */
   if (srcIdx >= urls.length) {
-    showAudioError(vIdx);
+    clearTimeout(startTimer);
+    showAudioError(vIdx, tok);
     return;
   }
   var currentUrl = urls[srcIdx];
@@ -1280,15 +1359,18 @@ function playUrduAudio(vIdx, srcIdx) {
   urAudio.onended = null;
   urAudio.onplaying = null;
   urAudio.src = currentUrl;
+  setOwner(vIdx, true);
   urAudio.load();
   urPreloadedUrl = "";
+  armStart(tok, urFail);
   /* اگر یہ ذریعہ نہ چلے تو اگلا آزمائیں */
   urAudio.onerror = function() {
     console.warn("Urdu audio failed, trying next source:", currentUrl);
-    playUrduAudio(vIdx, srcIdx + 1);
+    urFail();
   };
-  urAudio.onplaying = function() { startUrduProgress(vIdx); };
+  urAudio.onplaying = function() { if (tok === playTok) { clearTimeout(startTimer); startUrduProgress(vIdx); } };
   urAudio.onended = function() {
+    if (tok !== playTok) { return; }
     markUrduAllRead(vIdx);
     if (card) { card.classList.remove("urdu-playing"); }
     goToNextVerse();
@@ -1300,13 +1382,13 @@ function playUrduAudio(vIdx, srcIdx) {
       if (error && error.name === "AbortError") { return; }
       if (error && error.name === "NotAllowedError") { needTap(); return; }
       console.warn("Urdu audio play error:", error);
-      playUrduAudio(vIdx, srcIdx + 1);
+      urFail();
     });
   }
 }
 
 /* AUDIO ERROR MESSAGE */
-function showAudioError(vIdx) {
+function showAudioError(vIdx, tok) {
   var card = byId("ayah-card-" + vIdx);
   if (card) { card.classList.remove("urdu-playing"); }
   var block = byId("urdu-block-" + vIdx);
@@ -1320,7 +1402,7 @@ function showAudioError(vIdx) {
   }
   /* اگر مکمل سورت چل رہی ہو تو اگلی آیت پر جائیں */
   if (isAutoPlaying) {
-    setTimeout(function() { if (currentVerseIndex === vIdx) { goToNextVerse(); } }, 1000);
+    setTimeout(function() { if (tok === playTok && currentVerseIndex === vIdx) { goToNextVerse(); } }, 600);
   } else {
     stopAudio();
     byId("playerStatus").innerText = "اردو آڈیو دستیاب نہیں ہو سکی";
@@ -1389,6 +1471,8 @@ function resumeAudio() {
 /* STOP */
 function stopAudio() {
   pendingAutoPlay = false;
+  playTok++;
+  clearTimeout(startTimer);
   arAudio.pause();
   urAudio.pause();
   /* stop کے وقت handlers ہٹائیں تاکہ جھوٹی error نہ آئے */
@@ -1440,8 +1524,27 @@ function needTap() {
   if (s) { s.innerText = "تلاوت رک گئی — جاری رکھنے کے لیے ▶ چلائیں دبائیں"; }
   syncPlayUI();
 }
+/* جو آیت واقعی چل رہی ہے، اسکرین (نمایاں کارڈ، حالت) ہمیشہ اسی کے مطابق رہے */
+function resyncUI() {
+  if (currentVerseIndex < 0 || !versesData.length) { return; }
+  var o = arAudio._owner;
+  if (o && !arAudio.paused && o.idx !== currentVerseIndex && versesData[o.idx]) {
+    currentVerseIndex = o.idx; isPlayingUrdu = o.urdu;
+  }
+  var card = byId("ayah-card-" + currentVerseIndex);
+  if (card && !card.classList.contains("ayah-active")) {
+    each(".ayah-card.ayah-active", function(c) { c.classList.remove("ayah-active", "urdu-playing"); });
+    card.classList.add("ayah-active");
+    if (isPlayingUrdu) { card.classList.add("urdu-playing"); }
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    var v = versesData[currentVerseIndex], st = byId("playerStatus");
+    if (st && v) { st.innerText = (isPlayingUrdu ? "اردو ترجمہ" : curReciter.name) + " — " + vLabel(v); }
+  }
+  syncPlayUI();
+}
 function recoverPlayback(fromVisible) {
   if (currentVerseIndex < 0 || audioWasPaused) { return; }
+  resyncUI();
   var el = isPlayingUrdu ? urAudio : arAudio;
   if (wd.idx !== currentVerseIndex || wd.urdu !== isPlayingUrdu) {
     wd = { idx: currentVerseIndex, urdu: isPlayingUrdu, t: -1, still: 0, resumes: 0, reloaded: false };
@@ -1483,7 +1586,7 @@ function mediaMeta() {
   var v = versesData[currentVerseIndex];
   try {
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: "سورۃ " + surahNames[v.surahNum - 1] + " — آیت " + v.numberInSurah,
+      title: "سورۃ " + surahNames[v.surahNum - 1] + " — " + vLabel(v),
       artist: curReciter.name, album: NF_CFG.site
     });
   } catch (e) {}
@@ -1495,6 +1598,15 @@ if ("mediaSession" in navigator) {
   });
 }
 
+/* اسی آیت سے آگے پوری سورت مسلسل */
+function playFrom(i) {
+  if (i < 0 || i >= versesData.length) { return; }
+  stopAudio();
+  isAutoPlaying = true;
+  audioWasPaused = false;
+  playVerse(i);
+  toast(vLabel(versesData[i]) + " سے مسلسل تلاوت");
+}
 function toggleVerse(i) {
   if (currentVerseIndex === i) { stopAudio(); } else { playVerse(i); }
 }
@@ -1525,7 +1637,7 @@ function syncPlayUI() {
       "<button type='button' class='player-btn is-stop' data-pact='stop'>⏹ بند</button>";
     document.body.appendChild(f);
   }
-  byId("nfFloatTxt").innerText = "آیت " + versesData[currentVerseIndex].numberInSurah;
+  byId("nfFloatTxt").innerText = vLabel(versesData[currentVerseIndex]).replace("آیت نمبر", "آیت");
   var tg = byId("nfFloatToggle");
   tg.innerText = audioWasPaused ? "▶ چلائیں" : "⏸ وقفہ";
   f.hidden = false;
@@ -1636,7 +1748,8 @@ function playMini(btn) {
 
 /* ---------- آیت کا تصویری کارڈ (Canvas → PNG) ---------- */
 function wrapLines(ctx, text, maxW) {
-  var words = plain(text).split(" "), lines = [], cur = "";
+  /* صرف عام خالی جگہ پر توڑیں؛ NBSP (\u00A0) سے جڑے لفظ ایک ساتھ رہتے ہیں */
+  var words = String(text || "").replace(/[ \t\r\n]+/g, " ").trim().split(" "), lines = [], cur = "";
   for (var i = 0; i < words.length; i++) {
     var t = cur ? cur + " " + words[i] : words[i];
     if (cur && ctx.measureText(t).width > maxW) { lines.push(cur); cur = words[i]; }
@@ -1657,12 +1770,33 @@ function roundRect(ctx, x, y, w, h, r) {
 var AR_FONT = "'Amiri','Noto Naskh Arabic',serif";
 var UR_FONT = "'Noto Nastaliq Urdu',Tahoma,sans-serif";
 
+/* بلاگ کا لوگو (اسٹائل شیٹ میں موجود .logo-img والی تصویر) */
+var logoImgP = null;
+function loadLogo() {
+  if (!logoImgP) {
+    logoImgP = new Promise(function(res) {
+      var el = document.querySelector(".logo-img");
+      var bg = el ? getComputedStyle(el).backgroundImage : "";
+      var m = /url\(["']?(.*?)["']?\)/.exec(bg || "");
+      if (!m) { res(null); return; }
+      var im = new Image();
+      im.onload = function() { res(im); };
+      im.onerror = function() { res(null); };
+      im.src = m[1];
+    });
+  }
+  return logoImgP;
+}
 function buildAyahCard(info, cb) {
-  var ready = (document.fonts && document.fonts.load)
-    ? Promise.all([document.fonts.load("700 48px Amiri", info.ar.slice(0, 24)), document.fonts.load("400 30px 'Noto Nastaliq Urdu'", info.ur.slice(0, 24) + NF_CFG.site)]).catch(function() {})
-    : Promise.resolve();
-  ready.then(function() {
-    var W = 1080, PAD = 110, HEAD = 230, FOOT = 250, GAP = 70;
+  var ready = Promise.all([
+    (document.fonts && document.fonts.load)
+      ? Promise.all([document.fonts.load("700 48px Amiri", info.ar.slice(0, 24)), document.fonts.load("400 30px 'Noto Nastaliq Urdu'", info.ur.slice(0, 24) + NF_CFG.site + NF_CFG.slogan), document.fonts.load("700 30px 'Noto Nastaliq Urdu'", NF_CFG.site)]).catch(function() {})
+      : null,
+    loadLogo()
+  ]);
+  ready.then(function(rr) {
+    var logo = rr[1];
+    var W = 1080, PAD = 110, HEAD = 390, FOOT = 250, GAP = 70;
     /* مربع → پورٹریٹ → اسٹوری: جس میں آیت پوری آ جائے */
     var tries = [[1080, [66, 58, 50, 44]], [1350, [56, 50, 44, 38]], [1920, [54, 48, 42, 36, 32, 28]]];
     var cv = document.createElement("canvas");
@@ -1672,7 +1806,7 @@ function buildAyahCard(info, cb) {
       for (var k = 0; k < tries[t][1].length && !fit; k++) {
         var as = tries[t][1][k], us = Math.round(as * 0.58);
         ctx.font = "700 " + as + "px " + AR_FONT;
-        var al = wrapLines(ctx, "﴿ " + info.ar + " ﴾", W - PAD * 2);
+        var al = wrapLines(ctx, "﴿\u00A0" + plain(info.ar).replace(/ ([^ ]+)$/, "\u00A0$1") + "\u00A0﴾", W - PAD * 2);
         ctx.font = "400 " + us + "px " + UR_FONT;
         var ul = wrapLines(ctx, info.ur, W - PAD * 2);
         var h = al.length * as * 1.95 + GAP + ul.length * us * 2.35;
@@ -1690,10 +1824,22 @@ function buildAyahCard(info, cb) {
     /* سنہری حاشیہ */
     ctx.strokeStyle = "#BF953F"; ctx.lineWidth = 6; roundRect(ctx, 36, 36, W - 72, H - 72, 28); ctx.stroke();
     ctx.strokeStyle = "rgba(243,229,171,.45)"; ctx.lineWidth = 2; roundRect(ctx, 54, 54, W - 108, H - 108, 20); ctx.stroke();
-    /* سرنامہ */
-    ctx.fillStyle = "#F3E5AB"; ctx.font = "700 46px " + UR_FONT; ctx.fillText(NF_CFG.site, W / 2, 128);
+    /* سرنامہ: لوگو، نام اور سلوگن */
+    var LY = 140, LR = 62;
+    if (logo) {
+      ctx.save();
+      ctx.beginPath(); ctx.arc(W / 2, LY, LR, 0, Math.PI * 2); ctx.closePath(); ctx.clip();
+      ctx.drawImage(logo, W / 2 - LR, LY - LR, LR * 2, LR * 2);
+      ctx.restore();
+      ctx.strokeStyle = "#BF953F"; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.arc(W / 2, LY, LR + 3, 0, Math.PI * 2); ctx.stroke();
+      ctx.strokeStyle = "rgba(243,229,171,.35)"; ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(W / 2, LY, LR + 11, 0, Math.PI * 2); ctx.stroke();
+    }
+    ctx.fillStyle = "#F3E5AB"; ctx.font = "700 46px " + UR_FONT; ctx.fillText(NF_CFG.site, W / 2, logo ? 262 : 150);
+    ctx.fillStyle = "rgba(243,229,171,.8)"; ctx.font = "400 25px " + UR_FONT; ctx.fillText(NF_CFG.slogan, W / 2, logo ? 318 : 215);
     ctx.strokeStyle = "#8C6A2F"; ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(W / 2 - 150, 196); ctx.lineTo(W / 2 + 150, 196); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(W / 2 - 150, logo ? 360 : 262); ctx.lineTo(W / 2 + 150, logo ? 360 : 262); ctx.stroke();
     /* عربی متن */
     var y = HEAD + (H - HEAD - FOOT - fit.h) / 2;
     ctx.fillStyle = "#FFFDF8"; ctx.font = "700 " + fit.as + "px " + AR_FONT;
@@ -1727,24 +1873,46 @@ function closeAyahCard() {
   if (cardState.url) { URL.revokeObjectURL(cardState.url); cardState.url = ""; }
   if (cardState.back && cardState.back.focus) { cardState.back.focus(); }
 }
+function cardMsg(t) {
+  var m = byId("nfCardMsg");
+  if (m) { m.innerText = t; m.hidden = !t; }
+}
+function cardDownload(name) {
+  var a = document.createElement("a");
+  a.href = cardState.url; a.download = name;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
 function cardAct(act) {
   var blob = cardState.blob, info = cardState.info;
   if (act === "close" || !blob) { closeAyahCard(); return; }
   var name = "ayah-" + info.s + "-" + info.a + ".png";
   if (act === "dl") {
-    var a = document.createElement("a");
-    a.href = cardState.url; a.download = name;
-    document.body.appendChild(a); a.click(); document.body.removeChild(a);
-    toast("کارڈ محفوظ ہو رہا ہے");
+    cardDownload(name);
+    cardMsg("✔ تصویر ڈاؤن لوڈ ہو گئی (Downloads فولڈر میں)۔");
   } else if (act === "share") {
     var file = new File([blob], name, { type: "image/png" });
-    navigator.share({ files: [file], title: info.title, text: captionOf(info) }).catch(function() {});
+    /* جہاں براؤزر تصویر شیئر نہ کر سکے: تصویر محفوظ + کیپشن کاپی */
+    var fallback = function() {
+      cardDownload(name);
+      copyText(captionOf(info), "کیپشن کاپی ہو گیا");
+      cardMsg("یہ براؤزر تصویر براہِ راست شیئر نہیں کرتا۔ تصویر ڈاؤن لوڈ ہو گئی اور کیپشن کاپی ہو گیا: اب WhatsApp یا Facebook میں تصویر لگائیں اور کیپشن پیسٹ کر دیں۔");
+    };
+    var ok = false;
+    try { ok = !!(navigator.share && navigator.canShare && navigator.canShare({ files: [file] })); } catch (e) {}
+    if (!ok) { fallback(); return; }
+    navigator.share({ files: [file], text: captionOf(info) })
+      .then(function() { cardMsg("✔ شیئر ہو گیا۔"); })
+      .catch(function(e) { if (e && e.name === "AbortError") { cardMsg(""); return; } fallback(); });
   } else if (act === "copyimg") {
-    navigator.clipboard.write([new ClipboardItem({ "image/png": blob })])
-      .then(function() { toast("تصویر کاپی ہو گئی"); })
-      .catch(function() { toast("تصویر کاپی نہیں ہو سکی — ڈاؤن لوڈ کر لیں"); });
+    var done = function() { cardMsg("✔ تصویر کاپی ہو گئی: اب WhatsApp، Facebook یا کسی اور جگہ Ctrl+V (یا پیسٹ) کریں۔"); };
+    var fail = function() { cardMsg("یہ براؤزر تصویر کاپی نہیں کرنے دیتا؛ \"ڈاؤن لوڈ\" دبا کر تصویر محفوظ کر لیں۔"); };
+    try {
+      if (!(navigator.clipboard && navigator.clipboard.write && window.ClipboardItem)) { fail(); return; }
+      navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]).then(done).catch(fail);
+    } catch (e) { fail(); }
   } else if (act === "cap") {
     copyText(captionOf(info), "کیپشن کاپی ہو گیا");
+    cardMsg("✔ کیپشن کاپی ہو گیا (آیت، ترجمہ، حوالہ اور لنک): اب جہاں چاہیں پیسٹ کریں۔");
   }
 }
 function openAyahCard(info) {
@@ -1770,6 +1938,8 @@ function openAyahCard(info) {
             "<button type='button' class='player-btn' data-act='cap'>کیپشن کاپی</button>" +
             "<button type='button' class='player-btn nf-close' data-act='close'>بند کریں</button>" +
           "</div>" +
+          "<p class='nf-modal-msg' id='nfCardMsg' role='status' aria-live='polite' hidden='hidden'></p>" +
+          "<div class='nf-share nf-modal-share'>" + shareRow("متن اور لنک بھیجیں:", ["wa", "fb", "x", "tg"]) + "</div>" +
         "</div>";
       m.addEventListener("click", function(e) {
         if (e.target === m) { closeAyahCard(); return; }
@@ -1789,6 +1959,8 @@ function openAyahCard(info) {
     try { canFiles = !!(navigator.canShare && navigator.canShare({ files: [new File([blob], "a.png", { type: "image/png" })] })); } catch (e) {}
     m.querySelector("[data-act='share']").style.display = canFiles ? "" : "none";
     m.querySelector("[data-act='copyimg']").style.display = (navigator.clipboard && window.ClipboardItem) ? "" : "none";
+    m.querySelector(".nf-modal-box").setAttribute("data-akey", info.s + ":" + info.a);
+    cardMsg("");
     m.hidden = false;
     var first = m.querySelector(canFiles ? "[data-act='share']" : "[data-act='dl']");
     if (first) { first.focus(); }
