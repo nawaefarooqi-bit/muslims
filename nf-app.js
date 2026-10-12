@@ -195,7 +195,46 @@ function afterPanelLoad(p) {
     h.setAttribute("aria-expanded", h.nextElementSibling && h.nextElementSibling.classList.contains("open") ? "true" : "false");
   }, p);
   if (p.querySelector("#surahSelector")) { initPlayerUI(); }
+  if (p.querySelector("#nf-tafseer-list")) { loadTafseerList(p.querySelector("#nf-tafseer-list")); }
   if (p.querySelector(".nf-video") || p.id === "p-videos") { vidList = null; }
+}
+/* ---------- تفسیر قرآن: بلاگ کی اقساط سے خودکار ابواب ----------
+   بلاگ پر "تفسیر قرآن" لیبل والی ہر شائع شدہ پوسٹ یہاں آتی ہے؛ ہر سورت ایک باب، اقساط قرآن کی ترتیب سے۔ */
+function loadTafseerList(box) {
+  if (box.getAttribute("data-done")) { return; }
+  box.setAttribute("data-done", "1");
+  var label = box.getAttribute("data-label") || "تفسیر قرآن";
+  var cb = "nfTafseerCb" + Date.now();
+  var ud = function(n) { return String(n).replace(/[0-9]/g, function(d) { return "۰۱۲۳۴۵۶۷۸۹"[d]; }); };
+  window[cb] = function(data) {
+    var es = (data.feed && data.feed.entry) || [];
+    if (!es.length) { box.innerHTML = "<p class='ch-p'>پہلی قسط جلد شائع ہوگی، ان شاء اللہ۔</p>"; return; }
+    var posts = es.map(function(e) {
+      var l = (e.link || []).filter(function(x) { return x.rel === "alternate"; })[0];
+      var s = (e.category || []).map(function(c) { return c.term; }).filter(function(c) { return c.indexOf("سورۃ ") === 0; })[0] || "دیگر";
+      return { t: e.title.$t.replace(/^تدبرِ قرآن\s*\|\s*/, ""), u: l ? l.href : "#", d: e.published.$t, s: s };
+    }).sort(function(a, b) { return a.d < b.d ? -1 : 1; });
+    var order = [], g = {};
+    posts.forEach(function(p) { if (!g[p.s]) { g[p.s] = []; order.push(p.s); } g[p.s].push(p); });
+    var h = "";
+    order.forEach(function(s, i) {
+      var items = g[s].map(function(p) {
+        return "<li class='ch-p'><a href='" + esc(p.u) + "'>" + esc(p.t) + "</a></li>";
+      }).join("");
+      h += "<div class='chap' data-key='s" + (i + 1) + "'><div class='chap-h' onclick='toggleChap(this)' role='button' tabindex='0' aria-expanded='false'>" +
+           "<span>باب " + ud(i + 1) + ": " + esc(s) + " (" + ud(g[s].length) + (g[s].length === 1 ? " قسط" : " اقساط") + ")</span><span>&#9662;</span></div>" +
+           "<div class='chap-body'><ol>" + items + "</ol></div></div>";
+    });
+    box.innerHTML = h;
+  };
+  var sc = document.createElement("script");
+  sc.src = "https://nawaefarooqi313.blogspot.com/feeds/posts/summary/-/" + encodeURIComponent(label) +
+           "?alt=json-in-script&max-results=500&callback=" + cb;
+  sc.onerror = function() {
+    box.removeAttribute("data-done");
+    box.innerHTML = "<p class='ch-p'>⚠ اقساط لوڈ نہیں ہو سکیں۔ صفحہ دوبارہ کھولیں۔</p>";
+  };
+  document.body.appendChild(sc);
 }
 function loadPanel(n, then) {
   wantPanel = n;
