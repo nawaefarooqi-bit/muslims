@@ -71,6 +71,19 @@ var NF_CFG = {
     { id: "ur.ahmedali",   name: "مولانا احمد علی لاہوریؒ" }
   ],
 
+  /* ---------- پوری سورت سنیں: تلاوت مع اردو ترجمہ (سورت وار آڈیو) ----------
+     ہر ذریعہ: url میں {n} = سورت نمبر (001…114) اور {f} = files میں سے اس سورت کا نام۔
+     پہلا ذریعہ ڈیفالٹ ہے؛ قاری اپنی پسند چن سکتا ہے (یاد رہتی ہے)۔ کوئی ہٹانا ہو تو اس کی سطر مٹا دیں۔ */
+  fullSurahAudio: [
+    { id: "taqi", name: "مفتی محمد تقی عثمانی (آسان ترجمۂ قرآن)",
+      url: "https://www.nooresunnat.com/Audio/Complete%20Quran/Audio%20Quran%20Taqi%20Usmani/tu_mr_s_{n}.mp3",
+      credit: "تلاوت: مشاری راشد العفاسی · اردو آواز: حافظ افضل مشکات · بشکریہ NooreSunnat.com" },
+    { id: "maududi", name: "سید ابوالاعلیٰ مودودیؒ (تفہیم القرآن)",
+      url: "https://archive.org/download/AlQuranWithUrduTranslationRecitationByMisharyAlafasiTranslationBySyedMaududi/{n}%20-%20{f}.mp3",
+      files: ["Surat Al-Fatiha", "Surat Al-Baqara", "Surat Aal-E-Imran", "Surat An-Nisa", "Surat Al-Maeda", "Surat Al-Anaam", "Surat Al-Araf", "Surat Al-Anfal", "Surat At-Tawba", "Surat Yunus", "Surat Hud", "Surat Yusuf", "Surat Ar-Rad", "Surat Ibrahim", "Surat Al-Hijr", "Surat An-Nahl", "Surat Al-Isra", "Surat Al-Kahf", "Surat Maryam", "Surat Ta-Ha", "Surat Al-Anbiya", "Surat Al-Hajj", "Surat Al-Mumenoon", "Surat An-Noor", "Surat Al-Furqan", "Surat Ash-Shu'ara", "Surat An-Namal", "Surat Al-Qasas", "Surat Al-Ankaboot", "Surat Ar-Room", "Surat Luqman", "Surat As-Sajda", "Surat Al-Ahzab", "Surat Saba", "Surat Fatir", "Surat Ya-Seen", "Surat As-Saaffat", "Surat Sad", "Surat Az-Zumar", "Surat Al-Ghafir", "Surat Fussilat", "Surat Ash-Shura", "Surat Az-Zukhruf", "Surat Ad-Dukhan", "Surat Al-Jathiya", "Surat Al-Ahqaf", "Surat Muhammad", "Surat Al-Fath", "Surat Al-Hujraat", "Surat Qaaf", "Surat Adh-Dhariyat", "Surat At-Tur", "Surat An-Najam", "Surat Al-Qamar", "Surat Ar-Rahman", "Surat Al-Waqiya", "Surat Al-Hadeed", "Surat Al-Mujadila", "Surat Al-Hashr", "Surat Al-Mumtahina", "Surat As-Saff", "Surat Al-Jumua", "Surat Al-Munafiqoon", "Surat At-Taghabun", "Surat At-Talaq", "Surat At-Tahrim", "Surat Al-Mulk", "Surat Al-Qalam", "Surat Al-Haaqqa", "Surat Al-Maarij", "Surat Nooh", "Surat Al-Jinn", "Surat Al-Muzzammil", "Surat Al-Muddaththir", "Surat Al- Qiyamah", "Surat Al-Insan", "Surat Al-Mursalat", "Surat An-Naba", "Surat An-Naziat", "Surat Abasa", "Surat At-Takwir", "Surat Al-Infitar", "Surat Al-Mutaffifin", "Surat Al-Inshiqaq", "Surat Al-Burooj", "Surat At-Tariq", "Surat Al-Ala", "Surat Al-Ghashiya", "Surat Al-Fajr", "Surat Al-Balad", "Surat Ash-Shams", "Surat Al-Lail", "Surat Ad-Dhuha", "Surat Al-Inshirah", "Surat At-Teen", "Surat Al-Alaq", "Surat Al-Qadr", "Surat Al-Bayyina", "Surat Az-Zalzala", "Surat Al-Adiyat", "Surat Al-Qariyah", "Surat At-Takathur", "Surat Al-Asr", "Surat Al-Humaza", "Surat Al-Feel", "Surat Quraish", "Surat Al-Maun", "Surat Al-Kauther", "Surat Al-Kafiroon", "Surat An-Nasr", "Surat Al-Masadd", "Surat Al-Ikhlas", "Surat Al-Falaq", "Surat An-Nas"],
+      credit: "تلاوت: مشاری راشد العفاسی · ترجمہ: سید مودودیؒ · بشکریہ archive.org" }
+  ],
+
   /* ---------- ویڈیو گیلری ----------
      videoTabs : ٹیب (id وہی جو ویڈیو کی series میں لکھیں گے)
      playlists : کسی ٹیب کے اوپر پوری پلے لسٹ دکھانے کے لیے { tadabbur: "PLxxxxxxxx" }
@@ -906,6 +919,39 @@ function getBism(trans) {
 }
 function vLabel(v) { return v && v.bism ? "بسم اللہ" : "آیت نمبر " + (v ? v.numberInSurah : ""); }
 
+/* پوری سورت والا پلیئر (آیت وار پلیئر کے ساتھ الگ) — ترجمہ کا انتخاب */
+function fullSurahSrc(src, n) {
+  var f = src.files ? encodeURIComponent(src.files[n - 1] || "") : "";
+  return src.url.replace("{n}", pad3(n)).replace("{f}", f);
+}
+function fullSurahPick() {
+  var list = NF_CFG.fullSurahAudio || [];
+  return findBy(list, loadPref("fullsurah")) || list[0];
+}
+function fullSurahHtml(n) {
+  var list = NF_CFG.fullSurahAudio || [];
+  if (!list.length) { return ""; }
+  var cur = fullSurahPick();
+  var opts = list.map(function(x) {
+    return "<option value='" + esc(x.id) + "'" + (x.id === cur.id ? " selected" : "") + ">" + esc(x.name) + "</option>";
+  }).join("");
+  return "<div class='nf-fullsurah' data-n='" + n + "' style='margin:10px 0 14px;padding:10px 12px;border:1px solid #d6cfb8;border-radius:10px;background:#f7f4ea;text-align:center'>" +
+    "<div style='font-weight:bold;margin-bottom:6px'>🎧 پوری سورت سنیں — تلاوت مع اردو ترجمہ</div>" +
+    (list.length > 1 ? "<select class='quran-select' style='margin-bottom:6px;max-width:100%' onchange='setFullSurah(this.value)'>" + opts + "</select>" : "") +
+    "<audio id='fullSurahAudio' controls preload='none' style='width:100%;max-width:520px;display:block;margin:0 auto' src='" + esc(fullSurahSrc(cur, n)) + "' onplay='stopAudio()'></audio>" +
+    "<div id='fullSurahCredit' style='font-size:12px;opacity:.75;margin-top:4px'>" + esc(cur.credit || "") + "</div>" +
+  "</div>";
+}
+function setFullSurah(id) {
+  savePref("fullsurah", id);
+  var box = document.querySelector(".nf-fullsurah"), a = byId("fullSurahAudio");
+  if (!box || !a) { return; }
+  var cur = fullSurahPick(), n = parseInt(box.getAttribute("data-n"), 10);
+  a.pause(); a.src = fullSurahSrc(cur, n);
+  var c = byId("fullSurahCredit"); if (c) { c.textContent = cur.credit || ""; }
+}
+function pauseFullSurah() { var a = byId("fullSurahAudio"); if (a && !a.paused) { a.pause(); } }
+
 /* LOAD SURAH */
 function loadSurah(surahNum, autoPlay, focus) {
   surahNum = parseInt(surahNum, 10);
@@ -926,7 +972,7 @@ function loadSurah(surahNum, autoPlay, focus) {
     "<div class='surah-head'>" +
       "<h2>سورۃ " + surahNames[surahNum - 1] + "</h2>" +
       "<span id='surahSub'>تلاوت: " + esc(curReciter.name) + " · ترجمہ: " + esc(trans.name) + "</span>" +
-    "</div>" +
+    "</div>" + fullSurahHtml(surahNum) +
     "<div id='loadingMsg' class='surah-loading'>⏳ سورۃ " + surahNames[surahNum - 1] + " کا متن اور ترجمہ لوڈ ہو رہا ہے...</div>" +
     "<div id='versesContainer' style='display:none;'></div>" +
   "</div>";
@@ -1273,6 +1319,7 @@ function setOwner(vIdx, urdu) { arAudio._owner = { idx: vIdx, urdu: urdu }; }
 
 /* PLAY SINGLE VERSE */
 function playVerse(vIdx) {
+  pauseFullSurah();
   if (vIdx < 0 || vIdx >= versesData.length) { return; }
   var tok = ++playTok;
   stopMini();
