@@ -100,7 +100,8 @@ var NF_CFG = {
     { id: "kahani",   label: "کہانیاں" },
     { id: "shorts",   label: "شارٹس" }
   ],
-  playlists: {},
+  /* "UU…" = یوٹیوب چینل کی تمام اپلوڈ شدہ ویڈیوز (خودکار؛ نئی ویڈیو خود شامل ہو جاتی ہے) */
+  playlists: { all: "UUUG5QrlDW6Ozz9cuY55Qwtg", tadabbur: "UUUG5QrlDW6Ozz9cuY55Qwtg" },
   videos: [
   ]
 };
