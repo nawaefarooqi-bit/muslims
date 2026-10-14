@@ -225,7 +225,7 @@ function loadTafseerList(box) {
     var posts = es.map(function(e) {
       var l = (e.link || []).filter(function(x) { return x.rel === "alternate"; })[0];
       var s = (e.category || []).map(function(c) { return c.term; }).filter(function(c) { return c.indexOf("سورۃ ") === 0; })[0] || "دیگر";
-      return { t: e.title.$t.replace(/^تدبرِ قرآن\s*\|\s*/, ""), u: l ? l.href : "#", d: e.published.$t, s: s };
+      return { t: e.title.$t.replace(/^تدبرِ قرآن\s*\|\s*/, ""), u: l ? l.href.replace(/\t/g, "%09") : "#", d: e.published.$t, s: s };
     }).sort(function(a, b) { return a.d < b.d ? -1 : 1; });
     var order = [], g = {};
     posts.forEach(function(p) { if (!g[p.s]) { g[p.s] = []; order.push(p.s); } g[p.s].push(p); });
