@@ -94,14 +94,19 @@ var NF_CFG = {
        { id: "https://www.youtube.com/shorts/XXXXXXXXXXX", series: "kahani", title: "عنوان", summary: "", duration: "0:58" } */
   videoTabs: [
     { id: "all",      label: "تمام ویڈیوز" },
+    { id: "long",     label: "مکمل دروس" },
+    { id: "shorts",   label: "شارٹس" },
     { id: "tadabbur", label: "تدبر قرآن" },
     { id: "hadith",   label: "احادیثِ نبوی" },
     { id: "khutbat",  label: "خطبات" },
-    { id: "kahani",   label: "کہانیاں" },
-    { id: "shorts",   label: "شارٹس" }
+    { id: "kahani",   label: "کہانیاں" }
   ],
-  /* "UU…" = یوٹیوب چینل کی تمام اپلوڈ شدہ ویڈیوز (خودکار؛ نئی ویڈیو خود شامل ہو جاتی ہے) */
-  playlists: { all: "UUUG5QrlDW6Ozz9cuY55Qwtg", tadabbur: "UUUG5QrlDW6Ozz9cuY55Qwtg" },
+  /* یوٹیوب کی خودکار فہرستیں (نئی Public ویڈیو خود شامل ہو جاتی ہے):
+     "UU…" = تمام · "UULF…" = صرف لمبی ویڈیوز · "UUSH…" = صرف شارٹس
+     خالی ٹیب (نہ پلے لسٹ نہ ویڈیو) گیلری میں چھپا رہتا ہے؛ verticalTabs = عمودی (9:16) پلیئر */
+  playlists: { all: "UUUG5QrlDW6Ozz9cuY55Qwtg", long: "UULFUG5QrlDW6Ozz9cuY55Qwtg",
+               shorts: "UUSHUG5QrlDW6Ozz9cuY55Qwtg", tadabbur: "UUUG5QrlDW6Ozz9cuY55Qwtg" },
+  verticalTabs: ["shorts"],
   videos: [
   ]
 };
@@ -2129,6 +2134,7 @@ function collectVideos() {
 function vidMatch(v, tab) {
   if (tab === "all") { return true; }
   if (tab === "shorts") { return v.short; }
+  if (tab === "long") { return !v.short; }
   return v.series === tab;
 }
 function vidThumb(v) {
@@ -2156,17 +2162,21 @@ function vidRender() {
   if (!box) { return; }
   if (!vidList) { vidList = collectVideos(); }
   if (!findBy(NF_CFG.videoTabs, vidCur)) { vidCur = "all"; }
-  var tabs = NF_CFG.videoTabs.map(function(t) {
+  var pls = NF_CFG.playlists || {};
+  var tabs = NF_CFG.videoTabs.filter(function(t) {
+    return t.id === "all" || pls[t.id] || vidList.some(function(v) { return vidMatch(v, t.id); });
+  }).map(function(t) {
     var n = vidList.filter(function(v) { return vidMatch(v, t.id); }).length;
     var on = t.id === vidCur;
     return "<button type='button' role='tab' class='vtab" + (on ? " on" : "") + "' data-vtab='" + t.id + "' aria-selected='" + on + "'>" +
-           esc(t.label) + " <span class='vcount'>" + n + "</span></button>";
+           esc(t.label) + (n ? " <span class='vcount'>" + n + "</span>" : "") + "</button>";
   }).join("");
   var list = vidList.filter(function(v) { return vidMatch(v, vidCur); });
   var pl = NF_CFG.playlists && NF_CFG.playlists[vidCur];
   var html = "<div class='vtabs' role='tablist' aria-label='ویڈیو سیریز'>" + tabs + "</div>";
   if (pl) {
-    html += "<div class='vfeatured'><div class='vframe'><iframe loading='lazy' title='پلے لسٹ' allowfullscreen='allowfullscreen' " +
+    var vert = (NF_CFG.verticalTabs || []).indexOf(vidCur) >= 0;
+    html += "<div class='vfeatured" + (vert ? " vert" : "") + "'><div class='vframe'><iframe loading='lazy' title='پلے لسٹ' allowfullscreen='allowfullscreen' " +
             "allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share' " +
             "src='https://www.youtube-nocookie.com/embed/videoseries?list=" + encodeURIComponent(pl) + "&rel=0'></iframe></div></div>";
   }
