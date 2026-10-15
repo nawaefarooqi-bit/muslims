@@ -215,7 +215,34 @@ function afterPanelLoad(p) {
   }, p);
   if (p.querySelector("#surahSelector")) { initPlayerUI(); }
   if (p.querySelector("#nf-tafseer-list")) { loadTafseerList(p.querySelector("#nf-tafseer-list")); }
+  each(".nf-label-list", function(b) { loadLabelList(b); }, p);
   if (p.querySelector(".nf-video") || p.id === "p-videos") { vidList = null; }
+}
+/* ---------- لیبل والی پوسٹس کی فہرست (مثلاً زاد مسنونہ) ----------
+   <div class='nf-label-list' data-label='زاد مسنونہ'> — اس لیبل کی ہر شائع شدہ پوسٹ خود یہاں آتی ہے */
+function loadLabelList(box) {
+  if (box.getAttribute("data-done")) { return; }
+  box.setAttribute("data-done", "1");
+  var label = box.getAttribute("data-label");
+  var cb = "nfLabelCb" + Date.now() + Math.floor(Math.random() * 1000);
+  window[cb] = function(data) {
+    var es = (data.feed && data.feed.entry) || [];
+    if (!es.length) { box.innerHTML = "<p class='ch-p'>یہ سیریز جلد شامل کی جائے گی، ان شاء اللہ۔</p>"; return; }
+    var posts = es.map(function(e) {
+      var l = (e.link || []).filter(function(x) { return x.rel === "alternate"; })[0];
+      var sm = (e.summary && e.summary.$t) || "";
+      return { t: e.title.$t, u: l ? l.href : "#", d: e.published.$t, s: sm.replace(/\s+/g, " ").slice(0, 150) };
+    }).sort(function(a, b) { return a.d < b.d ? -1 : 1; });
+    box.innerHTML = posts.map(function(q, i) {
+      return "<a class='nf-lcard' href='" + esc(q.u) + "'><span class='nf-lnum'>" + String(i + 1).replace(/[0-9]/g, function(d) { return "۰۱۲۳۴۵۶۷۸۹"[d]; }) +
+             "</span><span class='nf-lbody'><b>" + esc(q.t) + "</b>" + (q.s ? "<small>" + esc(q.s) + "…</small>" : "") + "</span></a>";
+    }).join("");
+  };
+  var sc = document.createElement("script");
+  sc.src = "https://nawaefarooqi313.blogspot.com/feeds/posts/summary/-/" + encodeURIComponent(label) +
+           "?alt=json-in-script&max-results=200&callback=" + cb;
+  sc.onerror = function() { box.removeAttribute("data-done"); box.innerHTML = "<p class='ch-p'>⚠ مضامین لوڈ نہیں ہو سکے۔ صفحہ دوبارہ کھولیں۔</p>"; };
+  document.body.appendChild(sc);
 }
 /* ---------- تفسیر قرآن: بلاگ کی اقساط سے خودکار ابواب ----------
    بلاگ پر "تفسیر قرآن" لیبل والی ہر شائع شدہ پوسٹ یہاں آتی ہے؛ ہر سورت ایک باب، اقساط قرآن کی ترتیب سے۔ */

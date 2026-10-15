@@ -263,3 +263,10 @@ button.shr{padding:0;font-family:inherit;line-height:1;}
 .vsum{margin:0;font-size:.85rem;line-height:2.1;color:#3A4A42;}
 .vbody .nf-share{margin-top:6px;padding-top:8px;border-top:1px dashed #E2D5B0;}
 .vempty{text-align:center;padding:28px 16px;margin:0 16px;border:1.5px dashed var(--border-gold);border-radius:8px;background:#FFFEFA;line-height:2.4;color:#1A2520;}
+
+/* لیبل والی پوسٹس کے کارڈ (زاد مسنونہ وغیرہ) */
+.nf-lcard{display:flex;gap:12px;align-items:flex-start;text-decoration:none;color:#1f2a24;background:#fbf8ef;border:1px solid #e6dcc0;border-right:4px solid #c9a54a;border-radius:12px;padding:10px 14px;margin:0 0 10px;transition:transform .15s}
+.nf-lcard:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(15,61,46,.12)}
+.nf-lnum{flex:none;width:34px;height:34px;border-radius:50%;background:#0b3a27;color:#f3d683;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 0 0 2px #c9a54a}
+.nf-lbody b{display:block;color:#0b4a33;font-size:1.05rem;line-height:2}
+.nf-lbody small{display:block;color:#5a6a60;font-size:.9rem;line-height:1.9}
